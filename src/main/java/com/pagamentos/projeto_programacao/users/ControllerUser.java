@@ -21,11 +21,14 @@ public class ControllerUser {
             user.setDtBirth(userBody.dtBirth());
             user.setPassword(userBody.password());
             user.setEmail(userBody.email());
+
+            Entityuser user_t = new Entityuser();
+
         } catch (Exception e) {
             return ResponseEntity.status(400).body(e.getMessage());
         }
 
-        return ResponseEntity.status(400).body("Acertou");
+        return ResponseEntity.status(201).body("Acertou");
 
     }
 }
