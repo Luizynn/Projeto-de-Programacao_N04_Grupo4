@@ -1,5 +1,8 @@
 package com.pagamentos.projeto_programacao.payment;
 
+import com.pagamentos.projeto_programacao.client.ModelClient;
+import com.pagamentos.projeto_programacao.receipt.ModelReceipt;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -11,9 +14,15 @@ public class modelPayment {
     private double ticketValue;
     private String paymentMethod;
 
+    private ModelClient client;
+
     private static final List<String> VALID_PAYMENT_METHODS = Arrays.asList("cartao de credito", "pix", "cartao de debito");
     private static final String STATUS_IN_PROGRESS = "Em progresso";
     private static final String STATUS_PAID = "Pago";
+
+    public ModelClient getClient() {
+        return client;
+    }
 
     public String getId() {
         return id;
@@ -73,7 +82,9 @@ public class modelPayment {
         setTicketValue(this.ticketValue - valueAfterDiscount);
     }
 
-    public void computePayment(){
+    public ModelReceipt computePayment(){
         setStatus(STATUS_PAID);
+        ModelReceipt newReceipt = new ModelReceipt(this, null);
+        return newReceipt;
     }
 }

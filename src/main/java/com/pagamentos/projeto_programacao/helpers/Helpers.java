@@ -1,6 +1,10 @@
 package com.pagamentos.projeto_programacao.helpers;
 
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 public class Helpers {
     public static boolean checkCpf  (String cpf) {
         if(cpf.length() != 11) {
@@ -50,4 +54,26 @@ public class Helpers {
         return true;
     }
 
+    public static boolean checkName(String name){
+        if(name.trim().length() > 155 || name.isEmpty()){
+            System.out.println("Quantidade de caracteres excedente, tente novamente");
+            return false;
+        }
+
+        return true;
+    }
+    
+    public static final DateTimeFormatter FORMATADOR_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+    public static String getTodayDate(){
+        LocalDate today = LocalDate.now();
+        return today.format(FORMATADOR_DATA);
+    }
+
+    public static final DateTimeFormatter FORMATTER_HOUR = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+    public static String getCurrentHour(){
+        LocalTime now = LocalTime.now();
+        return now.format(FORMATTER_HOUR);
+    }
 }
