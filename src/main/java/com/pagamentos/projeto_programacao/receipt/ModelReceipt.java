@@ -84,10 +84,8 @@ public class ModelReceipt {
             throw new IllegalStateException("A nota fiscal já foi cancelada anteriormente.");
         }
 
-        // Atualiza status do pagamento
         payment.setStatus("Cancelado");
 
-        // Atualiza informações do recibo
         this.data = Helpers.getTodayDate();
         this.hour = Helpers.getCurrentHour();
 
