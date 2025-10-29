@@ -2,7 +2,6 @@ package com.pagamentos.projeto_programacao.users;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +21,7 @@ public class ControllerUser {
             user.setPassword(userBody.password());
             user.setEmail(userBody.email());
 
-            Entityuser user_t = new Entityuser();
+            User user_t = new User();
 
         } catch (Exception e) {
             return ResponseEntity.status(400).body(e.getMessage());

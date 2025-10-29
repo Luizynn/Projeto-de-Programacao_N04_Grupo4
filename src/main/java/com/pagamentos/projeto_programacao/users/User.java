@@ -5,12 +5,12 @@ import jakarta.persistence.*;
 
 import java.sql.Date;
 
-@Entity()
+@Entity
 @Table(name = "tb_user")
-public class Entityuser {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     private String name;
 
@@ -22,11 +22,11 @@ public class Entityuser {
 
     private Date dtBirth;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
