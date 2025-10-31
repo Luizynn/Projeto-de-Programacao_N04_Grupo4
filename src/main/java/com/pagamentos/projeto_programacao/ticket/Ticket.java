@@ -2,7 +2,7 @@ package com.pagamentos.projeto_programacao.ticket;
 
 import java.util.UUID;
 
-public class ModelTicket {
+public class Ticket {
 
     private String id;
     private String eventName;
