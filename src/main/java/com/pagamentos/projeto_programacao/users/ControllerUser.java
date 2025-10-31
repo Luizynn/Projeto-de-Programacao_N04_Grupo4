@@ -1,5 +1,10 @@
 package com.pagamentos.projeto_programacao.users;
 
+import com.pagamentos.projeto_programacao.response.Response;
+import com.pagamentos.projeto_programacao.users.DTO.CreateUser;
+import com.pagamentos.projeto_programacao.users.DTO.DTOUser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,25 +14,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/user")
 public class ControllerUser {
+
+    @Autowired
+    static private ServiceUser serviceUser;
+
     @PostMapping("/")
-    public ResponseEntity<String> create (@RequestBody DTOUser userBody) {
+    public ResponseEntity<Response<String>> create (@RequestBody CreateUser userBody) {
+        Response<String> response = new Response<String>(HttpStatus.CREATED);
 
-        ModelUser user = new ModelUser();
+        response.setData("AEEE");
+        serviceUser.create(userBody);
 
-        try {
-            user.setCpf(userBody.cpf());
-            user.setName(userBody.name());
-            user.setDtBirth(userBody.dtBirth());
-            user.setPassword(userBody.password());
-            user.setEmail(userBody.email());
-
-            User user_t = new User();
-
-        } catch (Exception e) {
-            return ResponseEntity.status(400).body(e.getMessage());
-        }
-
-        return ResponseEntity.status(201).body("Acertou");
+        return ResponseEntity.status(response.getStatus()).body(response);
 
     }
 }

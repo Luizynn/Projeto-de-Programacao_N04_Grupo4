@@ -3,7 +3,7 @@ package com.pagamentos.projeto_programacao.users;
 
 import jakarta.persistence.*;
 
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 @Table(name = "tb_user")
@@ -12,14 +12,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(name = "name",nullable = false,length = 255)
     private String name;
 
+    @Column(name = "cpf",nullable = false,length = 11)
     private String cpf;
 
+    @Column(name = "email",nullable = false, length = 255)
     private String email;
 
+    @Column(name = "password",nullable = false)
     private String password;
 
+    @Column(name = "dt_birth",nullable = false)
     private Date dtBirth;
 
     public long getId() {
