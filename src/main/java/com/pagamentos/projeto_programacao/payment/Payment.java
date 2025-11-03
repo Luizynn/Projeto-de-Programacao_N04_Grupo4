@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,19 +19,11 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "status_payment", nullable = false, length = 40)
-    private String status;
-
     @Column(name = "discount", precision = 10, scale = 2)
     private BigDecimal discount;
 
-    @ElementCollection
-    @CollectionTable(
-            name = "payment_price_amount",
-            joinColumns = @JoinColumn(name = "payment_id")
-    )
-    @Column(name = "price_amount")
-    private List<BigDecimal> priceAmount;
+    @Transient
+    private List<BigDecimal> priceAmount = new ArrayList<>();
 
     @Column(name = "total_amount", precision = 10, scale = 2)
     private BigDecimal totalAmount;
@@ -43,8 +36,11 @@ public class Payment {
     private User client;
 
     private static final List<String> VALID_PAYMENT_METHODS = Arrays.asList("cartao de credito", "pix", "cartao de debito");
-    private static final String STATUS_IN_PROGRESS = "Em progresso";
-    private static final String STATUS_PAID = "Pago";
+
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status_payment", nullable = false, length = 40)
+    private PaymentStatus status;
 
     public User getClient() {
         return client;
@@ -58,8 +54,12 @@ public class Payment {
         return id;
     }
 
-    public String getStatus() {
+    public PaymentStatus getStatus() {
         return status;
+    }
+
+    public void setStatus(PaymentStatus status) {
+        this.status = status;
     }
 
     public String getPaymentMethod() {
@@ -90,9 +90,6 @@ public class Payment {
         this.totalAmount = totalAmount;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
     public void setClient(User client) {
         this.client = client;
@@ -115,7 +112,7 @@ public class Payment {
         }
     }
 
-    public void generatePayment(BigDecimal totalAmount, String paymentMethod){
+    public void generatePayment(String paymentMethod){
         if(totalAmount.compareTo(BigDecimal.ZERO) < 0){
             throw new IllegalArgumentException("O valor do ticket deve ser positivo");
         }
@@ -123,12 +120,20 @@ public class Payment {
             throw new IllegalArgumentException("Método de pagamento inválido");
         }
 
-        this.totalAmount = totalAmount;
+        this.totalAmount = BigDecimal.ZERO;
         this.paymentMethod = paymentMethod;
-        this.status = STATUS_IN_PROGRESS;
+        this.status = PaymentStatus.IN_PROGRESS;
 
 
 
+    }
+
+    public void addPrice(BigDecimal price) {
+        if (price.compareTo(BigDecimal.ZERO) <= 0){
+            throw new IllegalArgumentException("O valor deve ser positivo");
+        }
+        this.priceAmount.add(price);
+        calculateTotal();
     }
 
     public void addDiscount(BigDecimal discount, BigDecimal totalAmount){
@@ -150,10 +155,17 @@ public class Payment {
             throw new IllegalStateException("Não há eventos a serem pagos");
         }
 
-        if (STATUS_PAID.equals(this.status)){
+        if (PaymentStatus.PAID.equals(this.status)){
             throw new IllegalStateException("O pagamento já foi realizado");
         }
-        setStatus(STATUS_PAID);
+        setStatus(PaymentStatus.PAID);
+    }
+
+    public void cancel() {
+        if (this.status == PaymentStatus.PAID){
+            throw new IllegalStateException("Pagamento já concluído");
+        }
+        this.status = PaymentStatus.CANCELLED;
     }
 
 
