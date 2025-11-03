@@ -1,4 +1,9 @@
 package com.pagamentos.projeto_programacao.payment.DTO;
 
-public record EditPayment(String status, String paymentMethod, double ticketValue) {
-}
+import java.math.BigDecimal;
+
+public record EditPayment(
+        String status,
+        String paymentMethod,
+        BigDecimal totalAmount
+) { }
