@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "tb_voucher")
-
 public class Voucher {
     private static final long serialVersionUID = 1L;
 

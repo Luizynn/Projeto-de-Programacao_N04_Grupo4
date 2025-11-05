@@ -125,6 +125,36 @@ public class Payment {
         }
     }
 
+    public void pay() {
+
+        if (this.status == PaymentStatus.PAID) {
+            throw new IllegalStateException("O pagamento já foi realizado.");
+        }
+
+        if (this.status == PaymentStatus.CANCELLED) {
+            throw new IllegalStateException("Não é possível pagar um pedido cancelado.");
+        }
+
+        if (this.totalAmount == null || this.totalAmount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalStateException("Não há valor a ser pago.");
+        }
+
+        this.status = PaymentStatus.PAID;
+    }
+
+
+    public void cancel() {
+
+        if (this.status == PaymentStatus.PAID) {
+            throw new IllegalStateException("Não é possível cancelar um pagamento já concluído.");
+        }
+
+        if (this.status == PaymentStatus.CANCELLED) {
+            throw new IllegalStateException("O pagamento já está cancelado.");
+        }
+        this.status = PaymentStatus.CANCELLED;
+    }
+
 
     public Long getId() {
         return id;
