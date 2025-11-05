@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ac09e97c-23ae-4afa-8c58-b88b9be822df" name="Changes" comment="Adicionando Helper para validar os dados do cartão">
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/payment/DTO/CreatePayment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/payment/Payment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/payment/PaymentMethod.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/payment/ServicePayment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.gitattributes" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/backend/mvnw" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/backend/mvnw.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/ProjetoProgramacaoApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/ProjetoProgramacaoApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/Subscription/ControllerSubscription.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/Subscription/ControllerSubscription.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/Subscription/RepositorySubscription.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/Subscription/RepositorySubscription.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/Subscription/ServiceSubscription.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/Subscription/ServiceSubscription.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/Subscription/Subscription.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/Subscription/Subscription.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/event/ControllerEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/event/ControllerEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/event/DTO/CreateEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/event/DTO/CreateEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/event/DTO/EditEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/event/DTO/EditEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/event/DTO/ResponseEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/event/DTO/ResponseEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/event/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/event/Event.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/event/RepositoryEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/event/RepositoryEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/event/ServiceEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/event/ServiceEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/event/exeption/ExceptionExpiredTimeForEdit.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/event/exeption/ExceptionExpiredTimeForEdit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/exception/RestExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/exception/RestExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/helpers/Helpers.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/helpers/Helpers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/localization/Localization.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/localization/Localization.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/localization/RepositoryLocalization.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/localization/RepositoryLocalization.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/payment/CardValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/payment/CardValidator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/payment/ControllerPayment.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/payment/ControllerPayment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/payment/DTO/CreatePayment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/payment/DTO/EditPayment.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/payment/DTO/EditPayment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/payment/DTO/ResponsePayment.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/payment/DTO/ResponsePayment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/payment/Payment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/payment/PaymentStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/payment/PaymentStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/payment/RepositoryPayment.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/payment/RepositoryPayment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/payment/ServicePayment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/response/Response.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/response/Response.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/ticket/ControllerTicket.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/ticket/ControllerTicket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/ticket/RepositoryTicket.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/ticket/RepositoryTicket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/ticket/ServiceTicket.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/ticket/ServiceTicket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/ticket/Ticket.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/ticket/Ticket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/users/ControllerUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/users/ControllerUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/users/DTO/CreateUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/users/DTO/CreateUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/users/DTO/DTOUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/users/DTO/DTOUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/users/HelpersUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/users/HelpersUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/users/ModelUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/users/ModelUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/users/RepositoryUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/users/RepositoryUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/users/ServiceUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/users/ServiceUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/users/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/users/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/users/exceptions/ExceptionInputInvalid.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/users/exceptions/ExceptionInputInvalid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/voucher/ControllerVoucher.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/voucher/ControllerVoucher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/voucher/DTO/CreateVoucher.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/voucher/DTO/CreateVoucher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/voucher/DTO/DTOVoucher.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/voucher/DTO/DTOVoucher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/voucher/RepositoryVoucher.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/voucher/RepositoryVoucher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/voucher/ServiceVoucher.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/voucher/ServiceVoucher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pagamentos/projeto_programacao/voucher/Voucher.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/pagamentos/projeto_programacao/voucher/Voucher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/pagamentos/projeto_programacao/ProjetoProgramacaoApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/pagamentos/projeto_programacao/ProjetoProgramacaoApplicationTests.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Enum" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Luizynn&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Luizynn/Projeto-de-Programacao_N04_Grupo4.git&quot;,
+    &quot;accountId&quot;: &quot;c3b136e4-c324-413f-b213-eb08ae63b117&quot;
+  }
+}</component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="34eOqwaIs1uQj4sDfZYWAV23ex5" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "onboarding.tips.debug.path": "/Users/luizyn/Desktop/Projeto-de-Programacao_N04_Grupo4/frontend/src/Main.java",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/backend" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="projeto_programacao" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="projeto_programacao" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ac09e97c-23ae-4afa-8c58-b88b9be822df" name="Changes" comment="" />
+      <created>1761570766448</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1761570766448</updated>
+    </task>
+    <task id="LOCAL-00001" summary="ModelReceipt, alterações no funcionamento do modelPayment e inicializando o EntityPayment">
+      <option name="closed" value="true" />
+      <created>1761577723330</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1761577723330</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Organizando o código e sinalizando alterações dos helpers no commit anterior">
+      <option name="closed" value="true" />
+      <created>1761577881965</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1761577881965</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Ajustes na entidade Payment">
+      <option name="closed" value="true" />
+      <created>1762179105627</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1762179105627</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Controller do Payment">
+      <option name="closed" value="true" />
+      <created>1762182688837</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1762182688837</updated>
+    </task>
+    <task id="LOCAL-00005" summary="DTO payment atualizado">
+      <option name="closed" value="true" />
+      <created>1762182701252</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1762182701252</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Atualizações">
+      <option name="closed" value="true" />
+      <created>1762182730267</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1762182730267</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Adicionando Helper para validar os dados do cartão">
+      <option name="closed" value="true" />
+      <created>1762349376233</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1762349376233</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="ModelReceipt, alterações no funcionamento do modelPayment e inicializando o EntityPayment" />
+    <MESSAGE value="Organizando o código e sinalizando alterações dos helpers no commit anterior" />
+    <MESSAGE value="Ajustes na entidade Payment" />
+    <MESSAGE value="Controller do Payment" />
+    <MESSAGE value="DTO payment atualizado" />
+    <MESSAGE value="Atualizações" />
+    <MESSAGE value="Adicionando Helper para validar os dados do cartão" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adicionando Helper para validar os dados do cartão" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/backend/src/Main.java</url>
+          <line>11</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/frontend/src/Main.java</url>
+          <line>11</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

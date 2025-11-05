@@ -76,4 +76,5 @@ public class Helpers {
         LocalTime now = LocalTime.now();
         return now.format(FORMATTER_HOUR);
     }
+
 }

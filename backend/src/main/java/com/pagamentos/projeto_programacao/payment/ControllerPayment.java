@@ -18,7 +18,7 @@ public class ControllerPayment {
     private ServicePayment servicePayment;
 
     @PostMapping
-    public ResponseEntity<ResponsePayment> create(@RequestBody CreatePayment body) {
+    public ResponseEntity<ResponsePayment> create(@RequestBody CreatePayment body) throws CardValidator.CardValidationException {
         ResponsePayment newPayment = servicePayment.create(body);
         return ResponseEntity.status(HttpStatus.CREATED).body(newPayment);
     }

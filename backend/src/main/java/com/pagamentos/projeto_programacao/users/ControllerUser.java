@@ -2,7 +2,6 @@ package com.pagamentos.projeto_programacao.users;
 
 import com.pagamentos.projeto_programacao.response.Response;
 import com.pagamentos.projeto_programacao.users.DTO.CreateUser;
-import com.pagamentos.projeto_programacao.users.DTO.DTOUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,8 @@
 package com.pagamentos.projeto_programacao.voucher;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "tb_voucher")
 
@@ -18,7 +20,7 @@ public class Voucher {
     private int qtUsed;
 
     @Column(name = "discount",nullable = false)
-    private float discount;
+    private BigDecimal discount;
 
     public long getId() {
         return id;
@@ -44,11 +46,11 @@ public class Voucher {
         this.qtUsed = qtUsed;
     }
 
-    public float getDiscount() {
+    public BigDecimal getDiscount() {
         return discount;
     }
 
-    public void setDiscount(float discount) {
+    public void setDiscount(BigDecimal discount) {
         this.discount = discount;
     }
 }

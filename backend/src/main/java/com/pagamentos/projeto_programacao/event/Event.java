@@ -1,12 +1,15 @@
 package com.pagamentos.projeto_programacao.event;
 
 import com.pagamentos.projeto_programacao.localization.Localization;
+import com.pagamentos.projeto_programacao.payment.Payment;
 import com.pagamentos.projeto_programacao.users.User;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_event")
@@ -37,6 +40,9 @@ public class Event implements Serializable {
     @Column(name = "price",nullable = false)
     private BigDecimal price;
 
+    @ManyToMany(mappedBy = "events")
+    private List<Payment> payments = new ArrayList<>();
+
     public Event() {
     }
 
@@ -46,6 +52,14 @@ public class Event implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<Payment> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(List<Payment> payments) {
+        this.payments = payments;
     }
 
     public User getOrganizer() {
