@@ -1,5 +1,6 @@
+package org.example;
 
-import main.ui.EventListFrame;
+import org.example.ui.EventListFrame;
 
 public class Main {
     public static void main(String[] args) {

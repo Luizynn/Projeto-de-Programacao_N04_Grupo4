@@ -125,6 +125,6 @@ public class ServicePayment {
     @Transactional
     public List<ResponsePayment> findByClientId(Long idClient) {
 
-        return repositoryPayment.findClientId(idClient).stream().map(ResponsePayment::new).toList();
+        return repositoryPayment.findByClientId(idClient).stream().map(ResponsePayment::new).toList();
     }
 }

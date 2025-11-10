@@ -7,6 +7,6 @@ import java.util.List;
 
 @Repository
 public interface RepositoryPayment extends JpaRepository<Payment,Long> {
-    List<Payment> findClientId(Long paymentId);
+    List<Payment> findByClientId(Long paymentId);
     List<Payment> findByStatus(PaymentStatus status);
 }

@@ -1,6 +1,6 @@
-package service;
+package org.example.service;
 
-import main.model.Event;
+import org.example.model.Event;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -17,6 +17,7 @@ public class EventService {
 
     public List<Event> listarEventos() {
         List<Event> eventos = new ArrayList<>();
+
         try {
             URL url = new URL(API_URL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -28,9 +29,16 @@ public class EventService {
             while ((line = in.readLine()) != null) response.append(line);
             in.close();
 
+            // 🔍 Ver o JSON retornado
+            System.out.println("Resposta da API: " + response);
+
+            // ✅ O JSON começa com { ... }, então criamos um JSONObject
             JSONObject json = new JSONObject(response.toString());
+
+            // ✅ Pegamos o array dentro da chave "data"
             JSONArray data = json.getJSONArray("data");
 
+            // ✅ Percorremos os eventos dentro de "data"
             for (int i = 0; i < data.length(); i++) {
                 JSONObject evt = data.getJSONObject(i);
                 Event e = new Event();
@@ -45,6 +53,7 @@ public class EventService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return eventos;
     }
 }

@@ -1,7 +1,7 @@
-package main.ui;
+package org.example.ui;
 
-import model.Event;
-import service.EventService;
+import org.example.model.Event;
+import org.example.service.EventService;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
