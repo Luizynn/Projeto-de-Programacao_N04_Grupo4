@@ -1,7 +1,7 @@
 package main.ui;
 
-import com.pagamentos.frontend.model.Event;
-import com.pagamentos.frontend.service.EventService;
+import model.Event;
+import service.EventService;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

@@ -1,6 +1,6 @@
-package main.service;
+package service;
 
-import com.pagamentos.frontend.model.Event;
+import main.model.Event;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
