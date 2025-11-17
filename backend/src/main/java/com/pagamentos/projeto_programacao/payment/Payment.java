@@ -79,12 +79,15 @@ public class Payment {
             this.voucher = null;
         } else {
 
+            // Valida percentual entre 0 e 100
             if (voucher.getDiscount().compareTo(BigDecimal.ZERO) < 0 ||
-                    voucher.getDiscount().compareTo(BigDecimal.ONE) > 0) {
+                    voucher.getDiscount().compareTo(new BigDecimal("100")) > 0) {
                 throw new IllegalArgumentException("Percentual de desconto do voucher é inválido.");
             }
+
             this.voucher = voucher;
         }
+
         recalculateTotals();
     }
 
@@ -107,11 +110,14 @@ public class Payment {
             this.paymentFee = BigDecimal.ZERO;
         }
 
-
         if (this.voucher != null) {
 
-            this.discountAmount = currentTotal.multiply(this.voucher.getDiscount());
+            BigDecimal discountPercent = this.voucher.getDiscount()
+                    .divide(BigDecimal.valueOf(100), 4, RoundingMode.HALF_UP);
+
+            this.discountAmount = currentTotal.multiply(discountPercent);
             currentTotal = currentTotal.subtract(this.discountAmount);
+
         } else {
             this.discountAmount = BigDecimal.ZERO;
         }

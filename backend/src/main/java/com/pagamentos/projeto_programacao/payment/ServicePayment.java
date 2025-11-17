@@ -66,7 +66,7 @@ public class ServicePayment {
         Voucher voucher = null;
         if (body.voucherCode() != null && !body.voucherCode().isBlank()) {
             voucher = repositoryVoucher.findByCupom(body.voucherCode())
-                    .orElseThrow(() -> new EntityNotFoundException("Cupom de voucher inválido"));
+                    .orElse(null);
         }
 
         Payment payment = new Payment();
@@ -81,8 +81,9 @@ public class ServicePayment {
 
         if (voucher != null) {
             payment.applyVoucher(voucher);
+            voucher.setQtUsed(voucher.getQtUsed()-1);
+            repositoryVoucher.save(voucher);
         }
-
 
         Payment saved = repositoryPayment.save(payment);
         return new ResponsePayment(saved);
