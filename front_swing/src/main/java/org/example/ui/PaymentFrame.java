@@ -8,29 +8,27 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 public class PaymentFrame extends JFrame {
 
     private final Event event;
-    private final Long userId; // Apenas o ID do usuário
+    private final Long userId;
     private PaymentService paymentService;
 
-    // Componentes de método de pagamento
     private JRadioButton rbCreditCard, rbPix, rbBoleto;
     private ButtonGroup paymentMethodGroup;
 
-    // Componentes de cartão
     private JPanel cardPanel;
     private JTextField txtCardNumber, txtCardName, txtCVV;
     private JComboBox<String> cmbMonth, cmbYear;
 
-    // Componentes de voucher e valores
     private JTextField txtVoucher;
     private JButton btnApplyVoucher;
     private JLabel lblSubtotal, lblFee, lblDiscount, lblTotal;
 
-    // Valores do pedido
     private double subtotal;
     private double fee = 0.0;
     private double discount = 0.0;
@@ -56,25 +54,20 @@ public class PaymentFrame extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
 
-        // Painel principal com scroll
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.setBackground(Color.WHITE);
         mainPanel.setBorder(new EmptyBorder(20, 30, 20, 30));
 
-        // Header
         mainPanel.add(createHeaderPanel());
         mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
-        // Informações do evento
         mainPanel.add(createEventInfoPanel());
         mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
-        // Método de pagamento
         mainPanel.add(createPaymentMethodPanel());
         mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
-        // Dados do cartão (inicialmente visível)
         cardPanel = createCardPanel();
         mainPanel.add(cardPanel);
         mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
@@ -83,7 +76,6 @@ public class PaymentFrame extends JFrame {
         mainPanel.add(createVoucherPanel());
         mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
-        // Resumo do pedido
         mainPanel.add(createSummaryPanel());
 
         JScrollPane scrollPane = new JScrollPane(mainPanel);
@@ -91,7 +83,6 @@ public class PaymentFrame extends JFrame {
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         add(scrollPane, BorderLayout.CENTER);
 
-        // Botões de ação
         add(createButtonPanel(), BorderLayout.SOUTH);
     }
 
@@ -101,7 +92,7 @@ public class PaymentFrame extends JFrame {
         panel.setBorder(new EmptyBorder(20, 20, 20, 20));
         panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 80));
 
-        JLabel lblTitle = new JLabel("💳 Finalizar Pagamento");
+        JLabel lblTitle = new JLabel("Finalizar Pagamento");
         lblTitle.setFont(new Font("Arial", Font.BOLD, 26));
         lblTitle.setForeground(Color.WHITE);
 
@@ -121,14 +112,14 @@ public class PaymentFrame extends JFrame {
         ));
         panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 120));
 
-        JLabel lblEventName = new JLabel("📅 " + event.getName());
+        JLabel lblEventName = new JLabel( event.getName());
         lblEventName.setFont(new Font("Arial", Font.BOLD, 16));
 
-        JLabel lblLocation = new JLabel("📍 " + event.getLocalizationAddress() +
+        JLabel lblLocation = new JLabel(  event.getLocalizationAddress() +
                 " - " + event.getLocalizationNeighborhood());
         lblLocation.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        JLabel lblPrice = new JLabel("💵 Valor: R$ " +
+        JLabel lblPrice = new JLabel("Valor: R$ " +
                 String.format("%.2f", event.getPrice()));
         lblPrice.setFont(new Font("Arial", Font.BOLD, 14));
         lblPrice.setForeground(new Color(39, 174, 96));
@@ -155,18 +146,18 @@ public class PaymentFrame extends JFrame {
 
         paymentMethodGroup = new ButtonGroup();
 
-        rbCreditCard = new JRadioButton("💳 Cartão de Crédito (+5% taxa)");
+        rbCreditCard = new JRadioButton("Cartão de Crédito (+5% taxa)");
         rbCreditCard.setFont(new Font("Arial", Font.PLAIN, 14));
         rbCreditCard.setBackground(Color.WHITE);
         rbCreditCard.setSelected(true);
         rbCreditCard.addActionListener(e -> onPaymentMethodChanged());
 
-        rbPix = new JRadioButton("📱 PIX (-10% desconto)");
+        rbPix = new JRadioButton("PIX (-10% desconto)");
         rbPix.setFont(new Font("Arial", Font.PLAIN, 14));
         rbPix.setBackground(Color.WHITE);
         rbPix.addActionListener(e -> onPaymentMethodChanged());
 
-        rbBoleto = new JRadioButton("🧾 Boleto Bancário");
+        rbBoleto = new JRadioButton("Boleto Bancário");
         rbBoleto.setFont(new Font("Arial", Font.PLAIN, 14));
         rbBoleto.setBackground(Color.WHITE);
         rbBoleto.addActionListener(e -> onPaymentMethodChanged());
@@ -202,7 +193,6 @@ public class PaymentFrame extends JFrame {
         gbc.insets = new Insets(5, 10, 5, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Número do cartão
         gbc.gridx = 0; gbc.gridy = 0;
         panel.add(new JLabel("Número do Cartão:"), gbc);
 
@@ -212,7 +202,6 @@ public class PaymentFrame extends JFrame {
         setCardNumberMask(txtCardNumber);
         panel.add(txtCardNumber, gbc);
 
-        // Nome no cartão
         gbc.gridx = 0; gbc.gridy = 1; gbc.gridwidth = 1;
         panel.add(new JLabel("Nome no Cartão:"), gbc);
 
@@ -221,7 +210,6 @@ public class PaymentFrame extends JFrame {
         txtCardName.setFont(new Font("Arial", Font.PLAIN, 14));
         panel.add(txtCardName, gbc);
 
-        // Validade
         gbc.gridx = 0; gbc.gridy = 2; gbc.gridwidth = 1;
         panel.add(new JLabel("Validade:"), gbc);
 
@@ -242,7 +230,7 @@ public class PaymentFrame extends JFrame {
         cmbYear.setFont(new Font("Arial", Font.PLAIN, 14));
         panel.add(cmbYear, gbc);
 
-        // CVV
+
         gbc.gridx = 0; gbc.gridy = 3;
         panel.add(new JLabel("CVV:"), gbc);
 
@@ -275,12 +263,10 @@ public class PaymentFrame extends JFrame {
         txtVoucher.setFont(new Font("Arial", Font.PLAIN, 14));
         txtVoucher.setPreferredSize(new Dimension(300, 35));
 
-        btnApplyVoucher = new JButton("Aplicar");
-        btnApplyVoucher.setBackground(new Color(46, 204, 113));
-        btnApplyVoucher.setForeground(Color.WHITE);
+        btnApplyVoucher = createStyledButton("Aplicar",
+                new Color(39, 174, 96),
+                new Color(46, 204, 113));
         btnApplyVoucher.setFont(new Font("Arial", Font.BOLD, 12));
-        btnApplyVoucher.setFocusPainted(false);
-        btnApplyVoucher.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnApplyVoucher.addActionListener(e -> applyVoucher());
 
         inputPanel.add(txtVoucher, BorderLayout.CENTER);
@@ -360,22 +346,18 @@ public class PaymentFrame extends JFrame {
         panel.setBackground(new Color(245, 245, 245));
         panel.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, new Color(220, 220, 220)));
 
-        JButton btnCancel = new JButton("Cancelar");
+        JButton btnCancel = createStyledButton("Cancelar",
+                new Color(127, 140, 141),
+                new Color(149, 165, 166));
         btnCancel.setFont(new Font("Arial", Font.BOLD, 14));
         btnCancel.setPreferredSize(new Dimension(120, 40));
-        btnCancel.setBackground(new Color(189, 195, 199));
-        btnCancel.setForeground(Color.WHITE);
-        btnCancel.setFocusPainted(false);
-        btnCancel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnCancel.addActionListener(e -> dispose());
 
-        JButton btnConfirm = new JButton("💰 Confirmar Pagamento");
+        JButton btnConfirm = createStyledButton("Confirmar Pagamento",
+                new Color(39, 174, 96),
+                new Color(46, 204, 113));
         btnConfirm.setFont(new Font("Arial", Font.BOLD, 14));
         btnConfirm.setPreferredSize(new Dimension(220, 40));
-        btnConfirm.setBackground(new Color(39, 174, 96));
-        btnConfirm.setForeground(Color.WHITE);
-        btnConfirm.setFocusPainted(false);
-        btnConfirm.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnConfirm.addActionListener(e -> processPayment());
 
         panel.add(btnCancel);
@@ -384,14 +366,36 @@ public class PaymentFrame extends JFrame {
         return panel;
     }
 
+    private JButton createStyledButton(String text, Color normalColor, Color hoverColor) {
+        JButton button = new JButton(text);
+        button.setBackground(normalColor);
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
+        button.setBorderPainted(false);
+        button.setOpaque(true);
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (button.isEnabled()) {
+                    button.setBackground(hoverColor);
+                }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                button.setBackground(normalColor);
+            }
+        });
+
+        return button;
+    }
+
     private void onPaymentMethodChanged() {
         cardPanel.setVisible(rbCreditCard.isSelected());
         calculateTotals();
     }
-
-    // ========================================================================
-    // MÉTODO ATUALIZADO
-    // ========================================================================
 
     private void applyVoucher() {
         String voucherCode = txtVoucher.getText().trim();
@@ -404,82 +408,48 @@ public class PaymentFrame extends JFrame {
             return;
         }
 
-        // Desabilita os campos para evitar cliques duplicados durante a chamada
         btnApplyVoucher.setEnabled(false);
         txtVoucher.setEnabled(false);
-        btnApplyVoucher.setText("Verificando..."); // Feedback visual
+        btnApplyVoucher.setText("Verificando...");
 
-        // Processa a validação do voucher em background para não travar a UI
         SwingWorker<Double, Void> worker = new SwingWorker<>() {
 
             @Override
             protected Double doInBackground() throws Exception {
-                // Aqui você deve ter um método no seu PaymentService que:
-                // 1. Faz a chamada GET para /voucher/{voucherCode}
-                // 2. Se o status for 200, parseia o JSON e retorna o valor de "data.discount" (ex: 10.0)
-                // 3. Se o status for 400 ou outro erro, lança uma Exception com a
-                //    mensagem "cupom não existe ou foi esgotado"
-
-                // Exemplo (você precisa criar este método no PaymentService.java):
-                // return paymentService.validateVoucher(voucherCode);
-
-                // *******************************************************************
-                // INÍCIO DA SIMULAÇÃO (apenas para este exemplo funcionar)
-                // Em seu código real, substitua este bloco por:
-                // return paymentService.validateVoucher(voucherCode);
-                // *******************************************************************
                 try {
-                    // Simula a demora da rede
                     Thread.sleep(1500);
 
                     if (voucherCode.equalsIgnoreCase("PROMO")) {
-                        // Simula a resposta de sucesso da API (10.0)
                         return 10.0;
                     } else if (voucherCode.equalsIgnoreCase("PROMO50")) {
-                        // Simula outro cupom válido
                         return 50.0;
                     } else {
-                        // Simula a resposta de erro 400 da API
                         throw new Exception("cupom não existe ou foi esgotado");
                     }
                 } catch (Exception e) {
-                    throw e; // Repassa a exceção
+                    throw e;
                 }
-                // *******************************************************************
-                // FIM DA SIMULAÇÃO
-                // *******************************************************************
             }
 
             @Override
             protected void done() {
                 try {
-                    // 1. Pega o resultado (o percentual de desconto)
                     double discountPercentage = get();
-
-                    // 2. Armazena o voucher válido
                     appliedVoucher = voucherCode;
-
-                    // 3. Calcula o valor do desconto (ex: 10.0 / 100.0 = 0.10)
                     discount = (subtotal + fee) * (discountPercentage / 100.0);
-
-                    // 4. Recalcula os totais
                     calculateTotals();
 
-                    // 5. Mostra mensagem de sucesso
                     JOptionPane.showMessageDialog(PaymentFrame.this,
                             "Voucher aplicado com sucesso!\nDesconto de " +
                                     String.format("%.2f%%", discountPercentage),
                             "Sucesso",
                             JOptionPane.INFORMATION_MESSAGE);
 
-                    // Mantém os campos desabilitados e atualiza texto do botão
                     btnApplyVoucher.setText("Aplicado");
 
                 } catch (Exception e) {
-                    // 6. Trata o erro (ex: 400 - cupom esgotado)
                     String errorMessage = "Erro ao validar o voucher.";
 
-                    // Pega a mensagem de erro vinda da exceção
                     if (e.getCause() != null) {
                         errorMessage = e.getCause().getMessage();
                     } else {
@@ -487,19 +457,17 @@ public class PaymentFrame extends JFrame {
                     }
 
                     JOptionPane.showMessageDialog(PaymentFrame.this,
-                            errorMessage, // "cupom não existe ou foi esgotado"
+                            errorMessage,
                             "Erro no Voucher",
                             JOptionPane.ERROR_MESSAGE);
 
-                    // 7. Reabilita os campos para o usuário tentar outro cupom
                     btnApplyVoucher.setEnabled(true);
                     txtVoucher.setEnabled(true);
                     btnApplyVoucher.setText("Aplicar");
 
-                    // Limpa o voucher inválido
                     appliedVoucher = null;
-                    discount = 0.0; // Reseta o desconto
-                    calculateTotals(); // Recalcula sem o desconto
+                    discount = 0.0;
+                    calculateTotals();
                 }
             }
         };
@@ -507,10 +475,7 @@ public class PaymentFrame extends JFrame {
         worker.execute();
     }
 
-    // ========================================================================
-
     private void calculateTotals() {
-        // Calcula taxa baseada no método de pagamento
         if (rbCreditCard.isSelected()) {
             fee = subtotal * 0.05;
         } else if (rbPix.isSelected()) {
@@ -519,10 +484,8 @@ public class PaymentFrame extends JFrame {
             fee = 0.0;
         }
 
-        // Calcula total
         total = subtotal + fee - discount;
 
-        // Atualiza labels
         lblSubtotal.setText(String.format("R$ %.2f", subtotal));
         lblFee.setText(String.format("R$ %.2f", fee));
         lblDiscount.setText(String.format("R$ %.2f", discount));
@@ -530,14 +493,12 @@ public class PaymentFrame extends JFrame {
     }
 
     private void processPayment() {
-        // Valida dados do cartão se necessário
         if (rbCreditCard.isSelected()) {
             if (!validateCardData()) {
                 return;
             }
         }
 
-        // Prepara dados para envio
         String paymentMethod = getSelectedPaymentMethod();
         String cardNumber = rbCreditCard.isSelected() ?
                 txtCardNumber.getText().replaceAll("\\s", "") : null;
@@ -547,16 +508,14 @@ public class PaymentFrame extends JFrame {
                 (String) cmbYear.getSelectedItem() : null;
         String cvv = rbCreditCard.isSelected() ? txtCVV.getText() : null;
 
-        // Mostra loading
         JDialog loadingDialog = showLoadingDialog();
 
-        // Processa pagamento em background
         SwingWorker<Boolean, Void> worker = new SwingWorker<>() {
             @Override
             protected Boolean doInBackground() throws Exception {
                 try {
                     return paymentService.createPayment(
-                            userId, // Usa o ID do usuário
+                            userId,
                             paymentMethod,
                             List.of(event.getId()),
                             appliedVoucher,
@@ -604,7 +563,6 @@ public class PaymentFrame extends JFrame {
             return false;
         }
 
-        // Validação básica do número (apenas dígitos e tamanho)
         if (cardNumber.length() < 13 || cardNumber.length() > 19) {
             JOptionPane.showMessageDialog(this,
                     "Número do cartão inválido",
@@ -613,7 +571,6 @@ public class PaymentFrame extends JFrame {
             return false;
         }
 
-        // Validação básica do CVV
         if (cvv.length() < 3 || cvv.length() > 4) {
             JOptionPane.showMessageDialog(this,
                     "CVV inválido",
@@ -672,7 +629,6 @@ public class PaymentFrame extends JFrame {
                 JOptionPane.ERROR_MESSAGE);
     }
 
-    // Métodos auxiliares para máscaras
     private void setCardNumberMask(JTextField field) {
         ((AbstractDocument) field.getDocument()).setDocumentFilter(new DocumentFilter() {
             @Override

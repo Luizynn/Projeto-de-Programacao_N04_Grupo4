@@ -21,11 +21,9 @@ public class EventListFrame extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
-        
-        // Define cor de fundo
+
         getContentPane().setBackground(new Color(245, 245, 245));
 
-        // Painel superior com título e botões
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.setBackground(new Color(30, 144, 255)); // Azul mais vibrante
         topPanel.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
@@ -35,13 +33,10 @@ public class EventListFrame extends JFrame {
         lblTitulo.setForeground(Color.WHITE);
         topPanel.add(lblTitulo, BorderLayout.WEST);
 
-        JButton btnAtualizar = new JButton("🔄 Atualizar");
-        btnAtualizar.setBackground(new Color(70, 130, 180)); // Azul aço
-        btnAtualizar.setForeground(Color.WHITE);
-        btnAtualizar.setFocusPainted(false);
-        btnAtualizar.setBorderPainted(false);
+        JButton btnAtualizar = createStyledButton("Atualizar",
+                new Color(70, 130, 180),
+                new Color(100, 149, 237));
         btnAtualizar.setFont(new Font("Arial", Font.BOLD, 12));
-        btnAtualizar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnAtualizar.addActionListener(e -> carregarEventos());
         topPanel.add(btnAtualizar, BorderLayout.EAST);
 
@@ -52,35 +47,48 @@ public class EventListFrame extends JFrame {
         tableModel = new DefaultTableModel(colunas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return column == 3; // Apenas a coluna do botão é editável
+                return column == 3;
             }
         };
-        
+
         table = new JTable(tableModel);
         table.setRowHeight(40);
         table.setFont(new Font("Arial", Font.PLAIN, 13));
-        table.setBackground(Color.WHITE); // Fundo branco
-        table.setSelectionBackground(new Color(173, 216, 230)); // Azul claro
-        table.setSelectionForeground(Color.BLACK); // Texto preto quando selecionado
+        table.setBackground(Color.WHITE);
+        table.setSelectionBackground(new Color(173, 216, 230));
+        table.setSelectionForeground(Color.BLACK);
         table.setGridColor(new Color(200, 200, 200));
         table.setShowVerticalLines(true);
         table.setShowHorizontalLines(true);
-        table.setFillsViewportHeight(true); // Preenche toda a altura disponível
+        table.setFillsViewportHeight(true);
 
-        // Configura cabeçalho
         JTableHeader header = table.getTableHeader();
-        header.setBackground(new Color(25, 25, 112)); // Azul escuro (midnight blue)
+        header.setBackground(new Color(30, 144, 255));
         header.setForeground(Color.WHITE);
         header.setFont(new Font("Arial", Font.BOLD, 14));
         header.setPreferredSize(new Dimension(header.getWidth(), 45));
+        header.setOpaque(true);
 
-        // Configura larguras das colunas
+        header.setDefaultRenderer(new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                                                           boolean isSelected, boolean hasFocus, int row, int column) {
+                JLabel label = new JLabel(value.toString());
+                label.setFont(new Font("Arial", Font.BOLD, 14));
+                label.setForeground(Color.WHITE);
+                label.setBackground(new Color(30, 144, 255));
+                label.setOpaque(true);
+                label.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+                label.setHorizontalAlignment(SwingConstants.LEFT);
+                return label;
+            }
+        });
+
         table.getColumnModel().getColumn(0).setPreferredWidth(250);
         table.getColumnModel().getColumn(1).setPreferredWidth(300);
         table.getColumnModel().getColumn(2).setPreferredWidth(120);
         table.getColumnModel().getColumn(3).setPreferredWidth(130);
 
-        // Adiciona renderizador e editor de botão
         table.getColumn("Comprar").setCellRenderer(new ButtonRenderer());
         table.getColumn("Comprar").setCellEditor(new ButtonEditor(new JCheckBox()));
 
@@ -89,19 +97,44 @@ public class EventListFrame extends JFrame {
         scrollPane.getViewport().setBackground(Color.WHITE);
         add(scrollPane, BorderLayout.CENTER);
 
-        // Painel inferior com informações
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         bottomPanel.setBackground(new Color(245, 245, 245));
         bottomPanel.setBorder(BorderFactory.createEmptyBorder(5, 20, 10, 20));
-        
+
         JLabel lblInfo = new JLabel("Clique em 'Comprar' para adquirir ingressos");
         lblInfo.setFont(new Font("Arial", Font.ITALIC, 12));
         lblInfo.setForeground(new Color(127, 140, 141));
         bottomPanel.add(lblInfo);
-        
+
         add(bottomPanel, BorderLayout.SOUTH);
 
         carregarEventos();
+    }
+
+    private JButton createStyledButton(String text, Color normalColor, Color hoverColor) {
+        JButton button = new JButton(text);
+        button.setBackground(normalColor);
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
+        button.setBorderPainted(false);
+        button.setOpaque(true);
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (button.isEnabled()) {
+                    button.setBackground(hoverColor);
+                }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                button.setBackground(normalColor);
+            }
+        });
+
+        return button;
     }
 
     private void carregarEventos() {
@@ -110,16 +143,15 @@ public class EventListFrame extends JFrame {
 
         for (Event e : eventos) {
             Object[] row = {
-                e.getName(),
-                e.getLocalizationAddress() + " - " + e.getLocalizationNeighborhood(),
-                String.format("R$ %.2f", e.getPrice()),
-                e // Passa o objeto Event para o botão
+                    e.getName(),
+                    e.getLocalizationAddress() + " - " + e.getLocalizationNeighborhood(),
+                    String.format("R$ %.2f", e.getPrice()),
+                    e // Passa o objeto Event para o botão
             };
             tableModel.addRow(row);
         }
     }
 
-    // Renderizador de botão
     class ButtonRenderer extends JButton implements TableCellRenderer {
         public ButtonRenderer() {
             setOpaque(true);
@@ -127,8 +159,8 @@ public class EventListFrame extends JFrame {
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value,
-                boolean isSelected, boolean hasFocus, int row, int column) {
-            setText("🛒 Comprar");
+                                                       boolean isSelected, boolean hasFocus, int row, int column) {
+            setText("Comprar");
             setBackground(new Color(34, 139, 34)); // Verde floresta
             setForeground(Color.WHITE);
             setFont(new Font("Arial", Font.BOLD, 12));
@@ -139,7 +171,6 @@ public class EventListFrame extends JFrame {
         }
     }
 
-    // Editor de botão
     class ButtonEditor extends DefaultCellEditor {
         private JButton button;
         private Event currentEvent;
@@ -149,7 +180,7 @@ public class EventListFrame extends JFrame {
             super(checkBox);
             button = new JButton();
             button.setOpaque(true);
-            button.setBackground(new Color(34, 139, 34)); // Verde floresta
+            button.setBackground(new Color(34, 139, 34));
             button.setForeground(Color.WHITE);
             button.setFont(new Font("Arial", Font.BOLD, 12));
             button.setFocusPainted(false);
@@ -163,9 +194,9 @@ public class EventListFrame extends JFrame {
 
         @Override
         public Component getTableCellEditorComponent(JTable table, Object value,
-                boolean isSelected, int row, int column) {
+                                                     boolean isSelected, int row, int column) {
             currentEvent = (Event) value;
-            button.setText("🛒 Comprar");
+            button.setText("Comprar");
             clicked = true;
             return button;
         }
@@ -187,29 +218,27 @@ public class EventListFrame extends JFrame {
     }
 
     private void abrirPagamento(Event evento) {
-        // Solicita o ID do usuário
         String userId = JOptionPane.showInputDialog(
-            this,
-            "Digite o ID do usuário para realizar a compra:",
-            "Identificação do Usuário",
-            JOptionPane.QUESTION_MESSAGE
+                this,
+                "Digite o ID do usuário para realizar a compra:",
+                "Identificação do Usuário",
+                JOptionPane.QUESTION_MESSAGE
         );
-        
+
         if (userId == null || userId.trim().isEmpty()) {
-            return; // Cancelou
+            return;
         }
-        
+
         try {
             Long idUsuario = Long.parseLong(userId.trim());
-            
-            // Abre o frame de pagamento passando o ID do usuário
+
             new PaymentFrame(evento, idUsuario).setVisible(true);
-            
+
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this,
-                "ID inválido! Digite apenas números.",
-                "Erro",
-                JOptionPane.ERROR_MESSAGE);
+                    "ID inválido! Digite apenas números.",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
