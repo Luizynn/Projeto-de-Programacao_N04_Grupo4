@@ -2,10 +2,13 @@ package org.example.ui;
 
 import org.example.model.Event;
 import org.example.service.PaymentService;
+import com.pagamentos.projeto_programacao.payment.CardValidator;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -72,7 +75,6 @@ public class PaymentFrame extends JFrame {
         mainPanel.add(cardPanel);
         mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
-        // Voucher
         mainPanel.add(createVoucherPanel());
         mainPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
@@ -112,10 +114,10 @@ public class PaymentFrame extends JFrame {
         ));
         panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 120));
 
-        JLabel lblEventName = new JLabel( event.getName());
+        JLabel lblEventName = new JLabel(event.getName());
         lblEventName.setFont(new Font("Arial", Font.BOLD, 16));
 
-        JLabel lblLocation = new JLabel(  event.getLocalizationAddress() +
+        JLabel lblLocation = new JLabel(event.getLocalizationAddress() +
                 " - " + event.getLocalizationNeighborhood());
         lblLocation.setFont(new Font("Arial", Font.PLAIN, 14));
 
@@ -200,6 +202,14 @@ public class PaymentFrame extends JFrame {
         txtCardNumber = new JTextField();
         txtCardNumber.setFont(new Font("Monospaced", Font.PLAIN, 14));
         setCardNumberMask(txtCardNumber);
+
+        // Adiciona validação em tempo real
+        txtCardNumber.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) { validateCardNumberOnType(); }
+            public void removeUpdate(DocumentEvent e) { validateCardNumberOnType(); }
+            public void insertUpdate(DocumentEvent e) { validateCardNumberOnType(); }
+        });
+
         panel.add(txtCardNumber, gbc);
 
         gbc.gridx = 0; gbc.gridy = 1; gbc.gridwidth = 1;
@@ -229,7 +239,6 @@ public class PaymentFrame extends JFrame {
         cmbYear = new JComboBox<>(years);
         cmbYear.setFont(new Font("Arial", Font.PLAIN, 14));
         panel.add(cmbYear, gbc);
-
 
         gbc.gridx = 0; gbc.gridy = 3;
         panel.add(new JLabel("CVV:"), gbc);
@@ -416,19 +425,7 @@ public class PaymentFrame extends JFrame {
 
             @Override
             protected Double doInBackground() throws Exception {
-                try {
-                    Thread.sleep(1500);
-
-                    if (voucherCode.equalsIgnoreCase("PROMO")) {
-                        return 10.0;
-                    } else if (voucherCode.equalsIgnoreCase("PROMO50")) {
-                        return 50.0;
-                    } else {
-                        throw new Exception("cupom não existe ou foi esgotado");
-                    }
-                } catch (Exception e) {
-                    throw e;
-                }
+                return paymentService.validateVoucher(voucherCode);
             }
 
             @Override
@@ -462,7 +459,7 @@ public class PaymentFrame extends JFrame {
                             JOptionPane.ERROR_MESSAGE);
 
                     btnApplyVoucher.setEnabled(true);
-                    txtVoucher.setEnabled(true);
+                    txtVoucher.setEnabled(false);
                     btnApplyVoucher.setText("Aplicar");
 
                     appliedVoucher = null;
@@ -501,7 +498,7 @@ public class PaymentFrame extends JFrame {
 
         String paymentMethod = getSelectedPaymentMethod();
         String cardNumber = rbCreditCard.isSelected() ?
-                txtCardNumber.getText().replaceAll("\\s", "") : null;
+                txtCardNumber.getText().trim() : null;
         String month = rbCreditCard.isSelected() ?
                 (String) cmbMonth.getSelectedItem() : null;
         String year = rbCreditCard.isSelected() ?
@@ -540,7 +537,12 @@ public class PaymentFrame extends JFrame {
                         showErrorMessage("Falha ao processar pagamento");
                     }
                 } catch (Exception e) {
-                    showErrorMessage(e.getMessage());
+                    e.printStackTrace();
+                    String errorMsg = e.getMessage();
+                    if (errorMsg == null || errorMsg.trim().isEmpty()) {
+                        errorMsg = "Erro desconhecido ao processar pagamento";
+                    }
+                    showErrorMessage(errorMsg);
                 }
             }
         };
@@ -548,13 +550,15 @@ public class PaymentFrame extends JFrame {
         worker.execute();
     }
 
+    // MÉTODO ATUALIZADO COM VALIDAÇÃO COMPLETA
     private boolean validateCardData() {
-        String cardNumber = txtCardNumber.getText().replaceAll("\\s", "");
+        String cardNumber = txtCardNumber.getText().trim();
         String cardName = txtCardName.getText().trim();
         String month = (String) cmbMonth.getSelectedItem();
         String year = (String) cmbYear.getSelectedItem();
         String cvv = txtCVV.getText();
 
+        // Validação básica de campos vazios
         if (cardNumber.isEmpty() || cardName.isEmpty() || cvv.isEmpty()) {
             JOptionPane.showMessageDialog(this,
                     "Preencha todos os campos do cartão",
@@ -563,23 +567,80 @@ public class PaymentFrame extends JFrame {
             return false;
         }
 
-        if (cardNumber.length() < 13 || cardNumber.length() > 19) {
+        // Validação completa usando CardValidator
+        try {
+            CardValidator.validate(cardNumber, month, year, cvv);
+            return true; // Cartão válido
+
+        } catch (CardValidator.InvalidNumberException e) {
             JOptionPane.showMessageDialog(this,
-                    "Número do cartão inválido",
+                    "Número do cartão inválido:\n" + e.getMessage(),
+                    "Erro no Cartão",
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+
+        } catch (CardValidator.InvalidExpirationException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Data de validade inválida:\n" + e.getMessage(),
+                    "Erro na Validade",
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+
+        } catch (CardValidator.InvalidCVVException e) {
+            JOptionPane.showMessageDialog(this,
+                    "CVV inválido:\n" + e.getMessage(),
+                    "Erro no CVV",
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+
+        } catch (CardValidator.CardValidationException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro na validação do cartão:\n" + e.getMessage(),
                     "Erro",
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
+    }
 
-        if (cvv.length() < 3 || cvv.length() > 4) {
-            JOptionPane.showMessageDialog(this,
-                    "CVV inválido",
-                    "Erro",
-                    JOptionPane.ERROR_MESSAGE);
-            return false;
+    // NOVO MÉTODO: Validação em tempo real do número do cartão
+    private void validateCardNumberOnType() {
+        SwingUtilities.invokeLater(() -> {
+            String number = txtCardNumber.getText().trim();
+            if (number.length() >= 13) {
+                String sanitized = number.replaceAll("\\D", "");
+                boolean luhnValid = passesLuhnCheck(sanitized);
+
+                if (luhnValid) {
+                    txtCardNumber.setBorder(BorderFactory.createLineBorder(
+                            new Color(39, 174, 96), 2
+                    ));
+                } else if (number.length() >= 16) {
+                    txtCardNumber.setBorder(BorderFactory.createLineBorder(
+                            new Color(231, 76, 60), 2
+                    ));
+                }
+            } else {
+                txtCardNumber.setBorder(UIManager.getBorder("TextField.border"));
+            }
+        });
+    }
+
+    // Método auxiliar para o algoritmo de Luhn (copiado do CardValidator)
+    private boolean passesLuhnCheck(String number) {
+        int sum = 0;
+        boolean doubleDigit = false;
+
+        for (int i = number.length() - 1; i >= 0; i--) {
+            int digit = Character.getNumericValue(number.charAt(i));
+            if (doubleDigit) {
+                digit *= 2;
+                if (digit > 9) digit -= 9;
+            }
+            sum += digit;
+            doubleDigit = !doubleDigit;
         }
 
-        return true;
+        return sum % 10 == 0;
     }
 
     private String getSelectedPaymentMethod() {
@@ -634,15 +695,9 @@ public class PaymentFrame extends JFrame {
             @Override
             public void replace(FilterBypass fb, int offset, int length,
                                 String text, AttributeSet attrs) throws BadLocationException {
-                String current = fb.getDocument().getText(0, fb.getDocument().getLength());
-                String newText = current.substring(0, offset) + text +
-                        current.substring(offset + length);
-                String digits = newText.replaceAll("\\D", "");
-
-                if (digits.length() <= 16) {
-                    String formatted = digits.replaceAll("(.{4})", "$1 ").trim();
-                    super.replace(fb, 0, fb.getDocument().getLength(),
-                            formatted, attrs);
+                String newText = text.replaceAll("\\D", "");
+                if (fb.getDocument().getLength() + newText.length() - length <= 16) {
+                    super.replace(fb, offset, length, newText, attrs);
                 }
             }
         });
